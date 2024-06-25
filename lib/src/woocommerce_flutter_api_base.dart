@@ -31,6 +31,9 @@ class WooCommerce {
   /// [useFaker], fakes all api requests
   final bool useFaker;
 
+  /// [lang], language preference
+  final String? lang;
+
   WooCommerce({
     required this.baseUrl,
     required this.username,
@@ -38,15 +41,15 @@ class WooCommerce {
     this.apiPath = '/wp-json/wc/v3',
     this.isDebug = true,
     this.useFaker = false,
+    this.lang,
   }) {
     final authToken = base64.encode(utf8.encode('$username:$password'));
     dio = Dio(
-      BaseOptions(
-        baseUrl: '$baseUrl$apiPath',
-        headers: {
-          HttpHeaders.authorizationHeader: 'Basic $authToken',
-        },
-      ),
+      BaseOptions(baseUrl: '$baseUrl$apiPath', headers: {
+        HttpHeaders.authorizationHeader: 'Basic $authToken',
+      }, queryParameters: {
+        if (lang?.isNotEmpty == true) 'lang': lang
+      }),
     );
 
     if (isDebug) {
