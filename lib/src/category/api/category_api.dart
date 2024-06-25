@@ -1,3 +1,4 @@
+import 'package:json_reader/json_reader.dart';
 import 'package:woocommerce_flutter_api/woocommerce_flutter_api.dart';
 
 part 'endpoints.dart';
@@ -68,7 +69,7 @@ extension WooCategoryApi on WooCommerce {
     );
 
     return (response.data as List)
-        .map((item) => WooProductCategory.fromJson(item))
+        .map((item) => WooProductCategory.fromJson(JsonReader(item)))
         .toList();
   }
 
@@ -134,6 +135,6 @@ extension WooCategoryApi on WooCommerce {
 
     final response = await dio.get(_CategoryEndpoints.singleCategory(id));
 
-    return WooProductCategory.fromJson(response.data as Map<String, dynamic>);
+    return WooProductCategory.fromJson(JsonReader(response.data));
   }
 }

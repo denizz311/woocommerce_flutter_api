@@ -1,3 +1,4 @@
+import 'package:json_reader/json_reader.dart';
 import 'package:woocommerce_flutter_api/src/helpers/fake_helper.dart';
 
 import '../enums/category_display.dart';
@@ -46,20 +47,20 @@ class WooProductCategory {
       this.count,
       this.links});
 
-  WooProductCategory.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    slug = json['slug'];
-    parent = json['parent'];
-    description = json['description'];
-    display = json['display'];
-    image = json['image'] != null
-        ? WooProductCategoryImage.fromJson(json['image'])
+  WooProductCategory.fromJson(JsonReader json) {
+    id = json['id'].asIntOrNull();
+    name = json['name'].asStringOrNull();
+    slug = json['slug'].asStringOrNull();
+    parent = json['parent'].asIntOrNull();
+    description = json['description'].asStringOrNull();
+    display = WooCategoryDisplay.fromString(json['display'].asString());
+    image = json['image'].asStringOrNull() != null
+        ? WooProductCategoryImage.fromJson(json['image'].asMap())
         : null;
-    menuOrder = json['menu_order'];
-    count = json['count'];
-    links = json['_links'] != null
-        ? WooProductCategoryLinks.fromJson(json['_links'])
+    menuOrder = json['menu_order'].asIntOrNull();
+    count = json['count'].asIntOrNull();
+    links = json['_links'].asStringOrNull() != null
+        ? WooProductCategoryLinks.fromJson(json['_links'].asMap())
         : null;
   }
 

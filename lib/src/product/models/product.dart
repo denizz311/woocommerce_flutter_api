@@ -347,7 +347,7 @@ class WooProduct {
         purchaseNote = json['purchase_note'].asStringOrNull(),
         categories = json['categories']
             .asList()
-            .map((i) => WooProductCategory.fromJson(i.asMap()))
+            .map((i) => WooProductCategory.fromJson(i))
             .toList(),
         tags = json['tags']
             .asList()
