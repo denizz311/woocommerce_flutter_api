@@ -55,7 +55,7 @@ class WooProductCategory {
     description = json['description'].asStringOrNull();
     display = WooCategoryDisplay.fromString(json['display'].asString());
     image = json['image'].asStringOrNull() != null
-        ? WooProductCategoryImage.fromJson(json['image'].asMap())
+        ? WooProductCategoryImage.fromJson(json['image'])
         : null;
     menuOrder = json['menu_order'].asIntOrNull();
     count = json['count'].asIntOrNull();

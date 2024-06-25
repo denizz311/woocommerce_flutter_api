@@ -1,3 +1,4 @@
+import 'package:json_reader/json_reader.dart';
 import 'package:woocommerce_flutter_api/src/helpers/fake_helper.dart';
 
 class WooProductCategoryImage {
@@ -35,15 +36,15 @@ class WooProductCategoryImage {
       this.name,
       this.alt});
 
-  WooProductCategoryImage.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    dateCreated = json['date_created'];
-    dateCreatedGmt = json['date_created_gmt'];
-    dateModified = json['date_modified'];
-    dateModifiedGmt = json['date_modified_gmt'];
-    src = (json['src'] != null && json['src'] is String) ? json['src'] : "";
-    name = json['name'];
-    alt = json['alt'];
+  WooProductCategoryImage.fromJson(JsonReader json) {
+    id = json['id'].asIntOrNull();
+    dateCreated = json['date_created'].asDateTime();
+    dateCreatedGmt = json['date_created_gmt'].asDateTime();
+    dateModified = json['date_modified'].asDateTime();
+    dateModifiedGmt = json['date_modified_gmt'].asDateTime();
+    src = json['src'].asString();
+    name = json['name'].asStringOrNull();
+    alt = json['alt'].asStringOrNull();
   }
 
   Map<String, dynamic> toJson() {
