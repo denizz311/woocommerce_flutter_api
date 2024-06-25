@@ -1,3 +1,4 @@
+import 'package:json_reader/json_reader.dart';
 import 'package:woocommerce_flutter_api/src/category/models/category.dart';
 import 'package:woocommerce_flutter_api/src/helpers/fake_helper.dart';
 import 'package:woocommerce_flutter_api/src/product/enums/product_backorder.dart';
@@ -5,9 +6,9 @@ import 'package:woocommerce_flutter_api/src/product/enums/product_catalog_visibi
 import 'package:woocommerce_flutter_api/src/product/enums/product_stock_status.dart';
 import 'package:woocommerce_flutter_api/src/product/enums/product_tax_status.dart';
 
+import '../../base/models/metadata.dart';
 import '../enums/product_status.dart';
 import '../enums/product_type.dart';
-import '../../base/models/metadata.dart';
 import 'product_dimension.dart';
 import 'product_download.dart';
 import 'product_image.dart';
@@ -278,86 +279,99 @@ class WooProduct {
     this.metaData = const [],
   });
 
-  WooProduct.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
-        name = json['name'],
-        slug = json['slug'],
-        dateCreated = DateTime.parse(json['date_created']),
-        dateCreatedGmt = DateTime.parse(json['date_modified_gmt']),
-        dateModified = DateTime.parse(json['date_modified']),
-        dateModifiedGmt = DateTime.parse(json['date_created_gmt']),
-        dateOnSaleFrom = DateTime.parse(json['date_on_sale_from']),
-        dateOnSaleFromGmt = DateTime.parse(json['date_on_sale_from_gmt']),
-        dateOnSaleTo = DateTime.parse(json['date_on_sale_to']),
-        dateOnSaleToGmt = DateTime.parse(json['date_on_sale_to_gmt']),
-        permalink = json['permalink'],
-        type = WooProductType.fromString(json['type']),
-        status = WooProductStatus.fromString(json['status']),
-        featured = json['featured'],
-        catalogVisibility =
-            WooProductCatalogVisibility.fromString(json['catalog_visibility']),
-        description = json['description'],
-        shortDescription = json['short_description'],
-        sku = json['sku'],
-        price = double.tryParse(json['price']),
-        regularPrice = double.tryParse(json['regular_price']),
-        salePrice = double.tryParse(json['sale_price']),
-        priceHtml = json['price_html'],
-        onSale = json['on_sale'],
-        purchasable = json['purchasable'],
-        totalSales = json['total_sales'],
-        virtual = json['virtual'],
-        downloadable = json['downloadable'],
-        downloads = (json['downloads'] as List)
-            .map((i) => WooProductDownload.fromJson(i))
+  WooProduct.fromJson(JsonReader json)
+      : id = json['id'].asIntOrNull(),
+        name = json['name'].asStringOrNull(),
+        slug = json['slug'].asStringOrNull(),
+        dateCreated = json['date_created'].asDateTime(),
+        dateCreatedGmt = json['date_modified_gmt'].asDateTime(),
+        dateModified = json['date_modified'].asDateTime(),
+        dateModifiedGmt = json['date_created_gmt'].asDateTime(),
+        dateOnSaleFrom = json['date_on_sale_from'].asDateTime(),
+        dateOnSaleFromGmt = json['date_on_sale_from_gmt'].asDateTime(),
+        dateOnSaleTo = json['date_on_sale_to'].asDateTime(),
+        dateOnSaleToGmt = json['date_on_sale_to_gmt'].asDateTime(),
+        permalink = json['permalink'].asStringOrNull(),
+        type = WooProductType.fromString(json['type'].asString()),
+        status = WooProductStatus.fromString(json['status'].asString()),
+        featured = json['featured'].asBool(),
+        catalogVisibility = WooProductCatalogVisibility.fromString(
+            json['catalog_visibility'].asString()),
+        description = json['description'].asStringOrNull(),
+        shortDescription = json['short_description'].asStringOrNull(),
+        sku = json['sku'].asStringOrNull(),
+        price = double.tryParse(json['price'].asString()),
+        regularPrice = double.tryParse(json['regular_price'].asString()),
+        salePrice = double.tryParse(json['sale_price'].asString()),
+        priceHtml = json['price_html'].asStringOrNull(),
+        onSale = json['on_sale'].asBool(),
+        purchasable = json['purchasable'].asBool(),
+        totalSales = json['total_sales'].asIntOrNull(),
+        virtual = json['virtual'].asBool(),
+        downloadable = json['downloadable'].asBool(),
+        downloads = json['downloads']
+            .asList()
+            .map((i) => WooProductDownload.fromJson(i.asMap()))
             .toList(),
-        downloadLimit = json['download_limit'],
-        downloadExpiry = json['download_expiry'],
-        externalUrl = json['external_url'],
-        buttonText = json['button_text'],
-        taxStatus = WooProductTaxStatus.fromString(json['tax_status']),
-        taxClass = json['tax_class'],
-        manageStock = json['manage_stock'],
-        stockQuantity = json['stock_quantity'],
-        stockStatus = WooProductStockStatus.fromString(json['stock_status']),
-        backorders = WooProductBackorder.fromString(json['backorders']),
-        backordersAllowed = json['backorders_allowed'],
-        backordered = json['backordered'],
-        soldIndividually = json['sold_individually'],
-        weight = json['weight'],
-        dimensions = WooProductDimension.fromJson(json['dimensions']),
-        shippingRequired = json['shipping_required'],
-        shippingTaxable = json['shipping_taxable'],
-        shippingClass = json['shipping_class'],
-        shippingClassId = json['shipping_class_id'],
-        reviewsAllowed = json['reviews_allowed'],
-        averageRating = json['average_rating'],
-        ratingCount = json['rating_count'],
-        relatedIds = json['related_ids'].cast<int>(),
-        upsellIds = json['upsell_ids'].cast<int>(),
-        crossSellIds = json['cross_sell_ids'].cast<int>(),
-        parentId = json['parent_id'],
-        purchaseNote = json['purchase_note'],
-        categories = (json['categories'] as List)
-            .map((i) => WooProductCategory.fromJson(i))
+        downloadLimit = json['download_limit'].asIntOrNull(),
+        downloadExpiry = json['download_expiry'].asIntOrNull(),
+        externalUrl = json['external_url'].asStringOrNull(),
+        buttonText = json['button_text'].asStringOrNull(),
+        taxStatus =
+            WooProductTaxStatus.fromString(json['tax_status'].asString()),
+        taxClass = json['tax_class'].asStringOrNull(),
+        manageStock = json['manage_stock'].asBool(),
+        stockQuantity = json['stock_quantity'].asIntOrNull(),
+        stockStatus =
+            WooProductStockStatus.fromString(json['stock_status'].asString()),
+        backorders =
+            WooProductBackorder.fromString(json['backorders'].asString()),
+        backordersAllowed = json['backorders_allowed'].asBool(),
+        backordered = json['backordered'].asBool(),
+        soldIndividually = json['sold_individually'].asBool(),
+        weight = json['weight'].asStringOrNull(),
+        dimensions = WooProductDimension.fromJson(json['dimensions'].asMap()),
+        shippingRequired = json['shipping_required'].asBool(),
+        shippingTaxable = json['shipping_taxable'].asBool(),
+        shippingClass = json['shipping_class'].asStringOrNull(),
+        shippingClassId = json['shipping_class_id'].asIntOrNull(),
+        reviewsAllowed = json['reviews_allowed'].asBool(),
+        averageRating = json['average_rating'].asStringOrNull(),
+        ratingCount = json['rating_count'].asIntOrNull(),
+        relatedIds =
+            json['related_ids'].asList().map((e) => e.asInt()).toList(),
+        upsellIds = json['upsell_ids'].asList().map((e) => e.asInt()).toList(),
+        crossSellIds =
+            json['cross_sell_ids'].asList().map((e) => e.asInt()).toList(),
+        parentId = json['parent_id'].asIntOrNull(),
+        purchaseNote = json['purchase_note'].asStringOrNull(),
+        categories = json['categories']
+            .asList()
+            .map((i) => WooProductCategory.fromJson(i.asMap()))
             .toList(),
-        tags = (json['tags'] as List)
-            .map((i) => WooProductItemTag.fromJson(i))
+        tags = json['tags']
+            .asList()
+            .map((i) => WooProductItemTag.fromJson(i.asMap()))
             .toList(),
-        images = (json['images'] as List)
-            .map((i) => WooProductImage.fromJson(i))
+        images = json['images']
+            .asList()
+            .map((i) => WooProductImage.fromJson(i.asMap()))
             .toList(),
-        attributes = (json['attributes'] as List)
-            .map((i) => WooProductItemAttribute.fromJson(i))
+        attributes = json['attributes']
+            .asList()
+            .map((i) => WooProductItemAttribute.fromJson(i.asMap()))
             .toList(),
-        defaultAttributes = (json['default_attributes'] as List)
-            .map((i) => WooProductDefaultAttribute.fromJson(i))
+        defaultAttributes = json['default_attributes']
+            .asList()
+            .map((i) => WooProductDefaultAttribute.fromJson(i.asMap()))
             .toList(),
-        variations = json['variations'].cast<int>(),
-        groupedProducts = json['grouped_products'].cast<int>(),
-        menuOrder = json['menu_order'],
-        metaData = (json['meta_data'] as List)
-            .map((i) => WooMetaData.fromJson(i))
+        variations = json['variations'].asList().map((e) => e.asInt()).toList(),
+        groupedProducts =
+            json['grouped_products'].asList().map((e) => e.asInt()).toList(),
+        menuOrder = json['menu_order'].asIntOrNull(),
+        metaData = json['meta_data']
+            .asList()
+            .map((i) => WooMetaData.fromJson(i.asMap()))
             .toList();
 
   @override

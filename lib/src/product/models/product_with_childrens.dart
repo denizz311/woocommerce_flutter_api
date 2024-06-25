@@ -1,3 +1,4 @@
+import 'package:json_reader/json_reader.dart';
 import 'package:woocommerce_flutter_api/woocommerce_flutter_api.dart';
 
 /// Model that have a product with it related products
@@ -42,26 +43,26 @@ class WooProductWithChildrens {
     for (final element in data) {
       if (product.relatedIds != null &&
           product.relatedIds!.contains(int.tryParse(element['id']))) {
-        relatedProducts.add(WooProduct.fromJson(element));
+        relatedProducts.add(WooProduct.fromJson(JsonReader(element)));
       }
 
       if (product.upsellIds != null &&
           product.upsellIds!.contains(int.tryParse(element['id']))) {
-        upsellProducts.add(WooProduct.fromJson(element));
+        upsellProducts.add(WooProduct.fromJson(JsonReader(element)));
       }
 
       if (product.crossSellIds != null &&
           product.crossSellIds!.contains(int.tryParse(element['id']))) {
-        crossSellProducts.add(WooProduct.fromJson(element));
+        crossSellProducts.add(WooProduct.fromJson(JsonReader(element)));
       }
 
       if (product.parentId == int.tryParse(element['id'])) {
-        parentProduct = WooProduct.fromJson(element);
+        parentProduct = WooProduct.fromJson(JsonReader(element));
       }
 
       if (product.groupedProducts != null &&
           product.groupedProducts!.contains(int.tryParse(element['id']))) {
-        groupedProducts.add(WooProduct.fromJson(element));
+        groupedProducts.add(WooProduct.fromJson(JsonReader(element)));
       }
     }
 
