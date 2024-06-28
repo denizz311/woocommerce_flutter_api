@@ -75,7 +75,7 @@ class WooBilling {
     data['country'] = country;
     data['email'] = email;
     data['phone'] = phone;
-    return data;
+    return data..removeWhere((key, value) => value == null);
   }
 
   factory WooBilling.fake() => WooBilling(

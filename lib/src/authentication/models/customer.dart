@@ -119,7 +119,7 @@ class WooCustomer {
     if (metaData != null) {
       data['meta_data'] = metaData!.map((v) => v.toJson()).toList();
     }
-    return data;
+    return data..removeWhere((key, value) => value == null);
   }
 
   @override
