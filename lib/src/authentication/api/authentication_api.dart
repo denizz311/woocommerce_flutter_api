@@ -9,7 +9,7 @@ extension WooAuthenticationApi on WooCommerce {
       'password': password,
     });
 
-    final userId = (response.data as Map<String, dynamic>)['user_id'] as int;
+    final userId = (response.data as Map<String, dynamic>)['id'] as int;
     await LocalStorageHelper.updateSecurityUserId(userId);
     return userId;
   }
@@ -20,7 +20,7 @@ extension WooAuthenticationApi on WooCommerce {
       data: customer.toJson(),
     );
 
-    final userId = (response.data as Map<String, dynamic>)['user_id'] as int;
+    final userId = (response.data as Map<String, dynamic>)['id'] as int;
     await LocalStorageHelper.updateSecurityUserId(userId);
     return userId;
   }
