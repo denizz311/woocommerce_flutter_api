@@ -3,7 +3,7 @@ part of 'authentication_api.dart';
 abstract class _AuthenticationEndpoints {
   static String get login => '/login';
 
-  static String get register => '/register';
+  static String get register => '/customers';
 
   static String get changePassword => '/change-password';
 
