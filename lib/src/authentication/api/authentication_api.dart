@@ -3,7 +3,7 @@ import 'package:woocommerce_flutter_api/woocommerce_flutter_api.dart';
 part 'endpoints.dart';
 
 extension WooAuthenticationApi on WooCommerce {
-  Future<void> login(String email, String password) async {
+  Future<int> login(String email, String password) async {
     final response = await dio.post(_AuthenticationEndpoints.login, data: {
       'email': email,
       'password': password,
@@ -11,9 +11,10 @@ extension WooAuthenticationApi on WooCommerce {
 
     final userId = (response.data as Map<String, dynamic>)['user_id'] as int;
     await LocalStorageHelper.updateSecurityUserId(userId);
+    return userId;
   }
 
-  Future<void> register(WooCustomer customer) async {
+  Future<int> register(WooCustomer customer) async {
     final response = await dio.post(
       _AuthenticationEndpoints.register,
       data: customer.toJson(),
@@ -21,6 +22,7 @@ extension WooAuthenticationApi on WooCommerce {
 
     final userId = (response.data as Map<String, dynamic>)['user_id'] as int;
     await LocalStorageHelper.updateSecurityUserId(userId);
+    return userId;
   }
 
   Future<void> changePassword(String password) async {
