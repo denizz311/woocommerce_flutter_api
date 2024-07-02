@@ -6,5 +6,6 @@ enum WooSortOrderBy {
   slug,
   price,
   popularity,
-  rating;
+  rating,
+  weight;
 }
