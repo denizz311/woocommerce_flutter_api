@@ -211,6 +211,9 @@ class WooProduct {
   /// Meta data
   final List<WooMetaData> metaData;
 
+  /// Allergens
+  final List<String> alergeny;
+
   WooProduct({
     this.id,
     this.name,
@@ -277,6 +280,7 @@ class WooProduct {
     this.groupedProducts,
     this.menuOrder,
     this.metaData = const [],
+    this.alergeny = const [],
   });
 
   WooProduct.fromJson(JsonReader json)
@@ -372,7 +376,8 @@ class WooProduct {
         metaData = json['meta_data']
             .asList()
             .map((i) => WooMetaData.fromJson(i.asMap()))
-            .toList();
+            .toList(),
+        alergeny = json['alergeny'].asListOf<String>();
 
   @override
   toString() => "{id: $id}, {name: $name}, {price: $price}, {status: $status}";
