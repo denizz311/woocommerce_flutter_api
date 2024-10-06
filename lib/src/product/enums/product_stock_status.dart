@@ -21,4 +21,16 @@ enum WooProductStockStatus {
     }
     return WooProductStockStatus.instock;
   }
+
+  @override
+  String toString() {
+    switch (this) {
+      case WooProductStockStatus.instock:
+        return 'instock';
+      case WooProductStockStatus.outofstock:
+        return 'outofstock';
+      case WooProductStockStatus.onbackorder:
+        return 'onbackorder';
+    }
+  }
 }

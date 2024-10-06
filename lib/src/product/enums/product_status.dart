@@ -22,4 +22,18 @@ enum WooProductStatus {
     }
     return WooProductStatus.publish;
   }
+
+  @override
+  String toString() {
+    switch (this) {
+      case WooProductStatus.draft:
+        return 'draft';
+      case WooProductStatus.pending:
+        return 'pending';
+      case WooProductStatus.private:
+        return 'private';
+      case WooProductStatus.publish:
+        return 'publish';
+    }
+  }
 }

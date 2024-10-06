@@ -21,4 +21,16 @@ enum WooProductTaxStatus {
     }
     return WooProductTaxStatus.taxable;
   }
+
+  @override
+  String toString() {
+    switch (this) {
+      case WooProductTaxStatus.taxable:
+        return 'taxable';
+      case WooProductTaxStatus.shipping:
+        return 'shipping';
+      case WooProductTaxStatus.none:
+        return 'none';
+    }
+  }
 }

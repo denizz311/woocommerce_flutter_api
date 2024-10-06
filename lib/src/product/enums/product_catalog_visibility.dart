@@ -25,4 +25,18 @@ enum WooProductCatalogVisibility {
     }
     return WooProductCatalogVisibility.visible;
   }
+
+  @override
+  String toString() {
+    switch (this) {
+      case WooProductCatalogVisibility.visible:
+        return 'visible';
+      case WooProductCatalogVisibility.catalog:
+        return 'catalog';
+      case WooProductCatalogVisibility.search:
+        return 'search';
+      case WooProductCatalogVisibility.hidden:
+        return 'hidden';
+    }
+  }
 }

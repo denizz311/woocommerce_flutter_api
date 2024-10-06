@@ -25,4 +25,18 @@ enum WooProductType {
     }
     return WooProductType.simple;
   }
+
+  @override
+  String toString() {
+    switch (this) {
+      case WooProductType.simple:
+        return 'simple';
+      case WooProductType.grouped:
+        return 'grouped';
+      case WooProductType.external:
+        return 'external';
+      case WooProductType.variable:
+        return 'variable';
+    }
+  }
 }

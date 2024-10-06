@@ -21,4 +21,16 @@ enum WooProductBackorder {
     }
     return WooProductBackorder.no;
   }
+
+  @override
+  String toString() {
+    switch (this) {
+      case WooProductBackorder.no:
+        return 'no';
+      case WooProductBackorder.notify:
+        return 'notify';
+      case WooProductBackorder.yes:
+        return 'yes';
+    }
+  }
 }

@@ -49,6 +49,17 @@ class WooProductImage {
         FakeHelper.datetime(),
       );
 
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'src': src,
+        'name': name,
+        'alt': alt,
+        'date_created': dateCreated.toIso8601String(),
+        'date_modified_gmt': dateModifiedGMT.toIso8601String(),
+        'dateModified': dateModified.toIso8601String(),
+        'date_created_gmt': dateCreatedGMT.toIso8601String(),
+      };
+
   @override
   String toString() {
     return 'WooProductImage(id: $id, dateCreated: $dateCreated, dateCreatedGMT: $dateCreatedGMT, dateModified: $dateModified, dateModifiedGMT: $dateModifiedGMT, src: $src, name: $name, alt: $alt)';
