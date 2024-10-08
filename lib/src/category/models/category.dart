@@ -71,7 +71,7 @@ class WooProductCategory {
     data['slug'] = slug;
     data['parent'] = parent;
     data['description'] = description;
-    data['display'] = display;
+    data['display'] = display.toString();
     if (image != null) {
       data['image'] = image!.toJson();
     }
