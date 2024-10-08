@@ -56,7 +56,7 @@ class WooProductImage {
         'alt': alt,
         'date_created': dateCreated.toIso8601String(),
         'date_modified_gmt': dateModifiedGMT.toIso8601String(),
-        'dateModified': dateModified.toIso8601String(),
+        'date_modified': dateModified.toIso8601String(),
         'date_created_gmt': dateCreatedGMT.toIso8601String(),
       };
 
