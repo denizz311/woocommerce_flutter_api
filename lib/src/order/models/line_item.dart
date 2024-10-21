@@ -75,9 +75,8 @@ class WooLineItem {
     total = double.tryParse(json['total'].asString());
     totalTax = double.tryParse(json['total_tax'].asString());
     taxes = json['taxes'].asList().map((i) => WooTax.fromJson(i)).toList();
-    metaData = (json['meta_data'] as List)
-        .map((i) => WooMetaData.fromJson(i))
-        .toList();
+    metaData =
+        json['meta_data'].asList().map((i) => WooMetaData.fromJson(i)).toList();
     sku = json['sku'].asStringOrNull();
     price = double.tryParse(json['price'].asString());
   }
