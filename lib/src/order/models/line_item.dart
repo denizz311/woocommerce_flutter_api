@@ -1,3 +1,4 @@
+import 'package:json_reader/json_reader.dart';
 import 'package:woocommerce_flutter_api/src/base/models/metadata.dart';
 import 'package:woocommerce_flutter_api/src/helpers/fake_helper.dart';
 import 'package:woocommerce_flutter_api/src/order/models/tax.dart';
@@ -62,23 +63,23 @@ class WooLineItem {
     this.price,
   });
 
-  WooLineItem.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    productId = json['product_id'];
-    variationId = json['variation_id'];
-    quantity = json['quantity'];
-    taxClass = json['tax_class'];
-    subtotal = double.tryParse(json['subtotal']);
-    subtotalTax = double.tryParse(json['subtotal_tax']);
-    total = double.tryParse(json['total']);
-    totalTax = double.tryParse(json['total_tax']);
+  WooLineItem.fromJson(JsonReader json) {
+    id = json['id'].asIntOrNull();
+    name = json['name'].asStringOrNull();
+    productId = json['product_id'].asIntOrNull();
+    variationId = json['variation_id'].asIntOrNull();
+    quantity = json['quantity'].asIntOrNull();
+    taxClass = json['tax_class'].asStringOrNull();
+    subtotal = double.tryParse(json['subtotal'].asString());
+    subtotalTax = double.tryParse(json['subtotal_tax'].asString());
+    total = double.tryParse(json['total'].asString());
+    totalTax = double.tryParse(json['total_tax'].asString());
     taxes = (json['taxes'] as List).map((i) => WooTax.fromJson(i)).toList();
     metaData = (json['meta_data'] as List)
         .map((i) => WooMetaData.fromJson(i))
         .toList();
-    sku = json['sku'];
-    price = double.tryParse(json['price']);
+    sku = json['sku'].asStringOrNull();
+    price = double.tryParse(json['price'].asString());
   }
 
   Map<String, dynamic> toJson() {
