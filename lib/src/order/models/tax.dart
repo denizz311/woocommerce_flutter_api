@@ -1,3 +1,4 @@
+import 'package:json_reader/json_reader.dart';
 import 'package:woocommerce_flutter_api/src/base/models/metadata.dart';
 import 'package:woocommerce_flutter_api/src/helpers/fake_helper.dart';
 
@@ -37,15 +38,17 @@ class WooTax {
     this.metaData,
   });
 
-  factory WooTax.fromJson(Map<String, dynamic> json) => WooTax(
-        id: json['id'],
-        rateCode: json['rate_code'],
-        rateId: json['rate_id'],
-        label: json['label'],
-        compound: bool.tryParse(json['compound']),
-        taxTotal: double.tryParse(json['tax_total']),
-        shippingTaxTotal: double.tryParse(json['shipping_tax_total']),
-        metaData: (json['meta_data'] as List)
+  factory WooTax.fromJson(JsonReader json) => WooTax(
+        id: json['id'].asIntOrNull(),
+        rateCode: json['rate_code'].asStringOrNull(),
+        rateId: json['rate_id'].asStringOrNull(),
+        label: json['label'].asStringOrNull(),
+        compound: bool.tryParse(json['compound'].asString()),
+        taxTotal: double.tryParse(json['tax_total'].asString()),
+        shippingTaxTotal:
+            double.tryParse(json['shipping_tax_total'].asString()),
+        metaData: json['meta_data']
+            .asList()
             .map((i) => WooMetaData.fromJson(i))
             .toList(),
       );

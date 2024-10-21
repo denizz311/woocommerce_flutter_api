@@ -1,3 +1,4 @@
+import 'package:json_reader/json_reader.dart';
 import 'package:woocommerce_flutter_api/src/helpers/fake_helper.dart';
 
 class WooMetaData {
@@ -12,10 +13,10 @@ class WooMetaData {
 
   WooMetaData(this.id, this.key, this.value);
 
-  WooMetaData.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
-        key = json['key'],
-        value = json['value'].toString();
+  WooMetaData.fromJson(JsonReader json)
+      : id = json['id'].asIntOrNull(),
+        key = json['key'].asStringOrNull(),
+        value = json['value'].asString();
 
   Map<String, dynamic> toJson() => {'id': id, 'key': key, 'value': value};
 

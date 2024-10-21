@@ -375,7 +375,7 @@ class WooProduct {
         menuOrder = json['menu_order'].asIntOrNull(),
         metaData = json['meta_data']
             .asList()
-            .map((i) => WooMetaData.fromJson(i.asMap()))
+            .map((i) => WooMetaData.fromJson(i))
             .toList(),
         alergeny = json['alergeny'].asListOf<String>();
 
