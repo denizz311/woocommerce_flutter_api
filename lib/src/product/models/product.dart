@@ -212,7 +212,7 @@ class WooProduct {
   final List<WooMetaData> metaData;
 
   /// Allergens
-  final List<Map<String, dynamic>> alergeny;
+  final List<Alergen> alergeny;
 
   final List<FreeProduct> freeProducts;
 
@@ -383,7 +383,7 @@ class WooProduct {
             .asList()
             .map((i) => WooMetaData.fromJson(i))
             .toList(),
-        alergeny = json['alergeny'].asListOfObjects(),
+        alergeny = json['alergeny'].asList().map(Alergen.fromJson).toList(),
         freeProducts =
             json['free_products'].asList().map(FreeProduct.fromJson).toList(),
         bonuses = json['bonuses'].asInt();
@@ -538,7 +538,7 @@ class WooProduct {
         'grouped_products': groupedProducts,
         'menu_order': menuOrder,
         'meta_data': metaData.map((e) => e.toJson()).toList(),
-        'alergeny': alergeny,
+        'alergeny': alergeny.map((e) => e.toJson()).toList(),
         'free_products': freeProducts.map((e) => e.toJson()).toList(),
         'bonuses': bonuses,
       };
@@ -556,5 +556,33 @@ class FreeProduct {
   Map<String, dynamic> toJson() => {
         'count': count,
         'id': id,
+      };
+}
+
+class Alergen {
+  const Alergen(
+    this.id,
+    this.name,
+    this.slug,
+    this.alergen,
+  );
+
+  factory Alergen.fromJson(JsonReader json) => Alergen(
+        json['id'].asInt(),
+        json['name'].asString(),
+        json['slug'].asString(),
+        json['alergen'].asString(),
+      );
+
+  final int id;
+  final String name;
+  final String slug;
+  final String alergen;
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'name': name,
+        'slug': slug,
+        'alergen': alergen,
       };
 }
