@@ -384,8 +384,11 @@ class WooProduct {
             .map((i) => WooMetaData.fromJson(i))
             .toList(),
         alergeny = json['alergeny'].asList().map(Alergen.fromJson).toList(),
-        freeProducts =
-            json['free_products'].asList().map(FreeProduct.fromJson).toList(),
+        freeProducts = json['free_products']
+            .asList()
+            .map(FreeProduct.fromJson)
+            .where((e) => e.count > 0)
+            .toList(),
         bonuses = json['bonuses'].asInt();
 
   @override
