@@ -212,7 +212,7 @@ class WooProduct {
   final List<WooMetaData> metaData;
 
   /// Allergens
-  final List<String> alergeny;
+  final List<Map<String, dynamic>> alergeny;
 
   final List<FreeProduct> freeProducts;
 
@@ -383,7 +383,7 @@ class WooProduct {
             .asList()
             .map((i) => WooMetaData.fromJson(i))
             .toList(),
-        alergeny = json['alergeny'].asListOf<String>(),
+        alergeny = json['alergeny'].asListOfObjects(),
         freeProducts =
             json['free_products'].asList().map(FreeProduct.fromJson).toList(),
         bonuses = json['bonuses'].asInt();
