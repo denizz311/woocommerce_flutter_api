@@ -214,6 +214,8 @@ class WooProduct {
   /// Allergens
   final List<String> alergeny;
 
+  final List<FreeProduct> freeProducts;
+
   WooProduct({
     this.id,
     this.name,
@@ -281,6 +283,7 @@ class WooProduct {
     this.menuOrder,
     this.metaData = const [],
     this.alergeny = const [],
+    this.freeProducts = const [],
   });
 
   WooProduct.fromJson(JsonReader json)
@@ -377,7 +380,9 @@ class WooProduct {
             .asList()
             .map((i) => WooMetaData.fromJson(i))
             .toList(),
-        alergeny = json['alergeny'].asListOf<String>();
+        alergeny = json['alergeny'].asListOf<String>(),
+        freeProducts =
+            json['free_products'].asList().map(FreeProduct.fromJson).toList();
 
   @override
   toString() => "{id: $id}, {name: $name}, {price: $price}, {status: $status}";
@@ -530,5 +535,21 @@ class WooProduct {
         'menu_order': menuOrder,
         'meta_data': metaData.map((e) => e.toJson()).toList(),
         'alergeny': alergeny,
+        'free_products': freeProducts.map((e) => e.toJson()).toList(),
+      };
+}
+
+class FreeProduct {
+  const FreeProduct(this.count, this.id);
+  factory FreeProduct.fromJson(JsonReader json) => FreeProduct(
+        json['count'].asInt(),
+        json['id'].asInt(),
+      );
+  final int count;
+  final int id;
+
+  Map<String, dynamic> toJson() => {
+        'count': count,
+        'id': id,
       };
 }
