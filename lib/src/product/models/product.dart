@@ -16,15 +16,17 @@ import 'product_item_attribute.dart';
 import 'product_item_tag.dart';
 
 enum DayOfWeek {
-  monday,
-  tuesday,
-  wednesday,
-  thursday,
-  friday,
-  saturday,
-  sunday;
+  monday(1),
+  tuesday(2),
+  wednesday(3),
+  thursday(4),
+  friday(5),
+  saturday(6),
+  sunday(7);
 
-  const DayOfWeek();
+  const DayOfWeek(this.weekday);
+
+  final int weekday;
 
   factory DayOfWeek.fromString(String day) {
     switch (day) {
@@ -44,25 +46,6 @@ enum DayOfWeek {
         return DayOfWeek.sunday;
       default:
         throw ArgumentError('Day is undefined => $day');
-    }
-  }
-
-  int get weekday {
-    switch (this) {
-      case DayOfWeek.monday:
-        return 1;
-      case DayOfWeek.tuesday:
-        return 2;
-      case DayOfWeek.wednesday:
-        return 3;
-      case DayOfWeek.thursday:
-        return 4;
-      case DayOfWeek.friday:
-        return 5;
-      case DayOfWeek.saturday:
-        return 6;
-      case DayOfWeek.sunday:
-        return 7;
     }
   }
 }
