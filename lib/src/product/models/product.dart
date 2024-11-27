@@ -15,6 +15,39 @@ import 'product_image.dart';
 import 'product_item_attribute.dart';
 import 'product_item_tag.dart';
 
+enum DayOfWeek {
+  monday,
+  tuesday,
+  wednesday,
+  thursday,
+  friday,
+  saturday,
+  sunday;
+
+  const DayOfWeek();
+
+  factory DayOfWeek.fromString(String day) {
+    switch (day) {
+      case 'monday':
+        return DayOfWeek.monday;
+      case 'tuesday':
+        return DayOfWeek.tuesday;
+      case 'wednesday':
+        return DayOfWeek.wednesday;
+      case 'thursday':
+        return DayOfWeek.thursday;
+      case 'friday':
+        return DayOfWeek.friday;
+      case 'saturday':
+        return DayOfWeek.saturday;
+      case 'sunday':
+        return DayOfWeek.sunday;
+      default:
+        throw ArgumentError('Day is undefined => $day');
+    }
+  }
+}
+
 class WooProduct {
   /// Unique identifier for the resource.
   final int? id;
@@ -218,6 +251,8 @@ class WooProduct {
 
   final int bonuses;
 
+  final Map<DayOfWeek, DaySchedule> daySchedules;
+
   WooProduct({
     this.id,
     this.name,
@@ -287,6 +322,7 @@ class WooProduct {
     this.alergeny = const [],
     this.freeProducts = const [],
     this.bonuses = 0,
+    this.daySchedules = const {},
   });
 
   WooProduct.fromJson(JsonReader json)
@@ -389,7 +425,18 @@ class WooProduct {
             .map(FreeProduct.fromJson)
             .where((e) => e.count > 0)
             .toList(),
-        bonuses = json['bonuses'].asInt();
+        bonuses = json['bonuses'].asInt(),
+        daySchedules = json['day_schedules'].asMap<JsonReader>().map(
+              (key, value) => MapEntry(
+                DayOfWeek.fromString(key),
+                DaySchedule(
+                  value['start_time'].asString(),
+                  value['end_time'].asString(),
+                ),
+              ),
+            );
+
+  bool get hasSchedule => daySchedules.isNotEmpty;
 
   @override
   toString() => "{id: $id}, {name: $name}, {price: $price}, {status: $status}";
@@ -544,6 +591,8 @@ class WooProduct {
         'alergeny': alergeny.map((e) => e.toJson()).toList(),
         'free_products': freeProducts.map((e) => e.toJson()).toList(),
         'bonuses': bonuses,
+        'day_schedules': daySchedules
+            .map((key, value) => MapEntry(key.name, value.toJson())),
       };
 }
 
@@ -587,5 +636,16 @@ class Alergen {
         'name': name,
         'slug': slug,
         'alergen': alergen,
+      };
+}
+
+class DaySchedule {
+  const DaySchedule(this.startTime, this.endTime);
+  final String startTime;
+  final String endTime;
+
+  Map<String, dynamic> toJson() => {
+        'start_time': startTime,
+        'end_time': endTime,
       };
 }
