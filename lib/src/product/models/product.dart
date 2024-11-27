@@ -426,12 +426,12 @@ class WooProduct {
             .where((e) => e.count > 0)
             .toList(),
         bonuses = json['bonuses'].asInt(),
-        daySchedules = json['day_schedules'].asMap<JsonReader>().map(
+        daySchedules = json['day_schedules'].asMap().map(
               (key, value) => MapEntry(
                 DayOfWeek.fromString(key),
                 DaySchedule(
-                  value['start_time'].asString(),
-                  value['end_time'].asString(),
+                  value['start_time'],
+                  value['end_time'],
                 ),
               ),
             );
