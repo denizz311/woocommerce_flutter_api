@@ -62,9 +62,9 @@ class WooBilling {
     phone = json['phone'];
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({bool isCart = false}) {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['first_name'] = firstName;
+    data['first_name'] = isCart ? 'Cart' : firstName;
     data['last_name'] = lastName;
     data['company'] = company;
     data['address_1'] = address1;
