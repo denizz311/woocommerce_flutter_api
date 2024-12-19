@@ -7,5 +7,6 @@ enum WooSortOrderBy {
   price,
   popularity,
   rating,
-  weight;
+  weight,
+  menu_order;
 }
